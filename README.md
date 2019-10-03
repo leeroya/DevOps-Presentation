@@ -1,10 +1,26 @@
 # DevOps-Presentation
 This is a presentation repo for building and releasing software using containers.
 
+# Prerequisite's 
 
-objectives
+- Docker desktop installed for Windows and Linux [physical developer machine]
+- VSCode installed [or similar code/text editor]
+- dotnet core []()
+- angular 
+    - [nodejs](https://nodejs.org/en/download/)
+    - angular cli
+    - build tools [ npm install --global --production windows-build-tools ]
+    - Sass [ npm install -g node-sass ]
+    - [yarn](https://yarnpkg.com/)
 
-docker 101
+# Objectives
+
+## docker 101
+
+
+
+- [Docker 101 Workshop](workshop/docker-101/README.md)
+
 using docker as a developer
     debug in a container [vscode]
 using docker as a build engineer
