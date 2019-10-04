@@ -23,11 +23,11 @@ This repository is authored in a way from a developers point of view with the co
 # Objectives
 
 - Docker 101
+- Docker-Compose
 - using Docker as a developer
     - debug in a container [vscode]
 - using Docker as a build engineer
     - build your code then create artifacts
-- Docker-Compose
 - using Docker as a deployment engineer
     - run containers
 - Kubernetes 101
@@ -37,10 +37,28 @@ This repository is authored in a way from a developers point of view with the co
 ## Useful Links
 
 - [Microsoft on Docker Hub](https://hub.docker.com/u/microsoft)
-
+- [Docker: Deploy on Kubernetes](https://docs.docker.com/docker-for-windows/kubernetes/)
 
 ## Docker 101
 
 - [Docker 101 Workshop](workshop/docker-101/README.md)
 
+## Docker-Compose
 
+- [docker-compose](workshop/docker-compose/README.md)
+
+## Docker as a developer
+
+- [debug in a container](workshop/debug-in-container/README.md)
+
+## Docker as a build engineer
+
+- [build your code then create artifacts](workshop/nuget-package/README.md)
+
+## Docker as a deployment engineer
+
+- [run containers](workshop/deployments/README.md)
+
+## Kubernetes 101
+
+- [run containers](workshop/deployments/README.md)
