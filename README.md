@@ -34,6 +34,11 @@ This repository is authored in a way from a developers point of view with the co
     - using kubernetes as a developer
     - deploying kubernetes applications
 
+## Useful Links
+
+- [Microsoft on Docker Hub](https://hub.docker.com/u/microsoft)
+
+
 ## Docker 101
 
 - [Docker 101 Workshop](workshop/docker-101/README.md)

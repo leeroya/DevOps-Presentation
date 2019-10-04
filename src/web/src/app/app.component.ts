@@ -14,10 +14,11 @@ import { WeatherForecast } from './weather-forecast';
 })
 export class AppComponent implements OnInit {
   title = 'DemoWeb';
-  columnsToDisplay = ['date', 'temperatureC', 'temperatureF', 'summary'];
+  displayedColumns = ['date', 'temperatureC', 'temperatureF', 'summary'];
   dataSource: MatTableDataSource<WeatherForecast>;
   sortedData: WeatherForecast[];
   busy: boolean;
+  // tslint:disable-next-line:variable-name
   private _forecasts: Array<WeatherForecast>;
   public get forecasts(): Array<WeatherForecast> {
     return this._forecasts;
@@ -26,8 +27,7 @@ export class AppComponent implements OnInit {
   public set forecasts(v: Array<WeatherForecast>) {
     this._forecasts = v;
   }
-  @ViewChild(MatPaginator) userMeetingsPaginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+
   constructor(
     public http: HttpClient
   ) {
@@ -38,12 +38,11 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this.busy = true;
     this.getData().subscribe((data: any) => {
+      this.busy = false;
       this.forecasts = [];
       this.forecasts = data;
       this.dataSource = new MatTableDataSource(this.forecasts);
-      this.dataSource.sort = this.sort;
       this.sortedData = this.forecasts.slice();
-      this.dataSource.paginator = this.userMeetingsPaginator;
     });
   }
 
