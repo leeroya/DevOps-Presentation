@@ -1,3 +1,5 @@
+[![Build Status](https://dev.azure.com/leeroyashworthsa/DevOps-Presentation/_apis/build/status/leeroya.DevOps-Presentation?branchName=master)](https://dev.azure.com/leeroyashworthsa/DevOps-Presentation/_build/latest?definitionId=1&branchName=master)
+
 # DevOps Presentation
 
 This is a presentation repo for building and releasing software using containers.
