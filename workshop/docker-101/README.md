@@ -50,113 +50,108 @@ Switching between Linux and Windows is done by right clicking on the whale icon 
 
 ## Intention 
 
-Run our first windows container.
+Run our first container.
 
-Open powershell as administrator and run the following:
+Open powershell run the following:
 
-    docker run --name nanoiis -d -p 80:80 nanoserver/iis
+    docker run --name mywebserver -d -p 80:80 nginx
 
 Open your browser and you will see the default IIS page when navigating to http://localhost.
+
+![](../../resources/nginx-80.png)
 
 ### Breakdown
 
 ``--name`` was passed to give the container a name so that it is easier to identify. ``-d`` passes the flag to the runtime to detach your console from the console in the container. ``-p`` performs a port binding from the host ``on the left`` to the container ``on the right``.
 
 
-This can be done in Linux just as easy by running a Nginx web server, switch your Docker context in the menu of the tray icon and run:
-
-    docker run --name nginx -d -p 80:80 nginx
-
 ``NOTE:`` 
-
-Notice that the port binding is the same, that is because Windows containers target the Windows kernel where as Linux targets a virtual machine that has Linux running in it.
 
 ## Lab 2
 
-Ensure that your Docker context is running in the Windows containers mode.
+Ensure that your Docker context is running in the Linux containers mode.
 
 ## Intention 
 
 Inspect a container to get some information from it.
 
-### Step 1
+### Logs
 
-Open PowerShell and run the following:
+    docker logs mywebserver
 
-    docker run --name nanoiisinspect -d -it -p 80:80 nanoserver/iis
+![](../../resources/nginx-logs.png)
 
-### Step 2
+As shown above you can see the log messages from nginx terminal in the container.
+
+This will pass to the terminal the console output from the container.
+
+### Inspect properties
+
+If it required to check variables like environment variables, file system properties etc.
+
+    docker inspect mywebserver
+
+![](../../resources/nginx-inspect.png)
+
+### See whats running
 
 To have a list of running containers you can run:
 
     docker ps
 
+![](../../resources/docker-ps.png)
+
 or:
 
     docker container ls
+
+![](../../resources/docker-container-ls.png)
 
 or:
 
     docker ps -a -f status=running
 
-### Step 3
+![](../../resources/docker-container-ls-status.png)
+
+### --format 
 
 Next lets get the IPAddress of the container, for that we use the -f / --format flag to extract metadata of the container.
 
 Run in a elevated PowerShell terminal:
 
-    docker inspect -f "{{ .NetworkSettings.Networks.nat.IPAddress }}" nanoiisinspect
+    docker inspect -f "{{ .NetworkSettings.Networks.bridge.IPAddress }}" mywebserver
 
-### Step 4
+![](../../resources/docker-inspect-ip.png)
 
-Next lets filter to get just the id of the container:
 
-    docker inspect --format="{{.Id}}" nanoiisinspect
-
-## Lab 3
 
 ### Intention
 
 The purpose of this lab is to demonstrate that it is possible to interact with a container that is created.
 
-### Step 1
 
-Run in a elevated PowerShell terminal:
+    docker container cp .\index.html mywebserver:/usr/share/nginx/html
 
-    docker run --name nanoiiscopy -d -it -p 8080:80 nanoserver/iis
+![](../../resources/docker-copy-in-file.png)
 
-Check that the container was created and is running by navigating to ``http://localhost:8080`` and by running ``docker ps`` and seeing the container listed ``nanoisscopy``.
-
-Next run the command to stop the container:
-
-    docker stop nanoiiscopy
-
-This is to allow us to copy a file to IIS in the container, next run:
-
-    docker container cp .\index.html nanoiiscopy:C:\inetpub\wwwroot\index.html
-
+![](../../resources/docker-copy-in-file-page.png)
 
 ``NOTE:``
 
 The command above needs to be run the folder [workshop/docker-101] as the .\index.html indicates from ``[current directory]\index.html``. 
 
-The custom index file has been copied to the container, next the container can be started by running:
+The custom index file has been copied to the container.
 
-    docker start nanoiiscopy
 
-Open your browser to ``http://localhost:8080`` and you will see now the custom webpage has replaced the standard IIS webpage.
+### Building Images
 
-## Lab 4
+The purpose of this lab is to demonstrate the build command which is commonly used to create application image for consuming in a production environment.
 
-### Intention
+This can be achieved by using a Dockerfile. In the docker-101 folder run the following command:
 
-The purpose of this lab is to demonstrate the build command which is commonly used to create application images for consuming in a production environment.
+    docker build -t my-awesome-app .
 
-### Step 1
-
-The Lab 3 process can be achieved by using a Dockerfile. In the docker-101 folder run the following command:
-
-    docker build -t iis .
+![](../../resources/docker-build-image-nginx.png)
 
 ### Breakdown
 
@@ -164,21 +159,56 @@ The Lab 3 process can be achieved by using a Dockerfile. In the docker-101 folde
 
 ``build`` the compile command in the Docker cli to create image repositories.
 
-``-t`` this flag is used to give your image repository a logical name, in this example the image repository name iis is given with no tag so the cli will append ``latest``, it is best practice to version your image repositories by example ``iis:1``.
+``-t`` this flag is used to give your image repository a logical name, in this example the image repository name my-awesome-app is given with no tag so the cli will append ``latest``.
+
+    It is best practice to version your image repositories. 
+
+Example ``my-awesome-app:1``.
 
 ``.`` , this is the build context where the cli will begin looking for files, in this example it is the current directory.
 
-### Step 2
+### Dockerfile
+
+The Dockerfile is a list of instructions that get execuited by the docker cli, a container gets created for each line and moves context between conataines while the ```RUN``` command executes what is mentioned.
+
+NOTE: Best practice is to combine logical commands together to minimise the containers ```layers``` making the total image size smaller.
+
+### FROM
+
+This line specifies a base image that will be used as the starting point.
+
+    FROM nginx
+
+### RUN
+
+This a method of executing a command or script.
+
+    RUN apt-get install nodejs
+
+### COPY
+
+Add files to the container that can be used for building or retaining as a artifact in the image.
+
+    COPY index.html /usr/share/nginx/html/index.html
+
+### EXPOSE
+
+Expose a port when the container is run, this can be overridden.
+
+## Run The Image
 
 Next the image needs to be run, simply run the command:
 
-    docker run -d -p 8081:80 iis
+    docker run -d -p 81:80 my-awesome-app
 
-Navigate to in your browser ``http://localhost:8081`` and you will see the custom page.
+Navigate to in your browser ``http://localhost:81`` and you will see the custom page.
+
+![](../../resources/docker-run-image-nginx.png)
+
 
 ## Overview
 
-In this section we were introduced to the Docker cli and ran a IIS container, changed the loading page, and built a custom image that can be run later on a different machine.
+In this section we were introduced to the Docker cli and ran a nginx container, changed the loading page, and built a custom image that can be run later on a different machine.
 
 ## House cleaning
 
@@ -186,3 +216,8 @@ It would be good to clean up containers that are not required, to clean up it is
 
     docker rm $(docker ps --format="{{.ID}}") -f
 
+![](../../resources/docker-clean-containers)
+
+    docker rmi $(docker images my-awesome-app --format="{{.ID}}") -f
+
+![](../../resources/docker-clean-images.png)
