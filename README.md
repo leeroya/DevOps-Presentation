@@ -22,6 +22,40 @@ This repository is authored in a way from a developers point of view with the co
 
 # Objectives
 
+# [Docker Concepts](workshop/docker-101/README.md)
+
+- What are containers and how do they differ from other technologies
+- Docker Desktop
+- Dockerfile
+- Docker commands
+- Maintenance of a system running the Docker engine
+- Docker licensing model
+- New features and some advanced concepts
+- Windows & Linux Containers
+    - What is the difference between Windows and Linux aside from the Operating System
+    - Performance differences between Linux and Windows
+    - When to use OS specific vs Cross platform
+    - Hybrid platforms mixing containers with shared resources. [Shared Database with API in a container]
+ 
+
+# Building and running apps in containers
+
+BuildKit and how to author the Dockerfile
+- Docker run commands and Docker-Compose
+Basics in orchestration , Docker Swarm and compose including Kubernetes 101
+
+What is swarm and when to use it
+Docker-Compose with swam
+What is Kubernetes
+Swarm vs Kubernetes
+Docker Desktop and Kubernetes
+Kubernetes Tools
+Pipelines with containers
+
+When should you put your build in a container
+How to put your build into a container
+Benefits of containerized builds
+
 - Docker 101
 - Docker-Compose
 - using Docker as a developer

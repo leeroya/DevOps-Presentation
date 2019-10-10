@@ -1,4 +1,19 @@
-# Docker 101
+# Docker Concepts
+
+``What are containers and how do they differ from other technologies?``
+
+### "Official"
+
+Docker is an open platform for developing, shipping, and running applications. Docker enables you to separate your applications from your infrastructure so you can deliver software quickly. With Docker, you can manage your infrastructure in the same ways you manage your applications. By taking advantage of Docker’s methodologies for shipping, testing, and deploying code quickly, you can significantly reduce the delay between writing code and running it in production. [read more.](https://docs.docker.com/engine/docker-overview/)
+
+### "Unofficial"
+
+An way of binding a kernel process to a filesystem and load only the infrastructure configuration that is required. Containers are light-weight as there is not overhead of the entire operating system.
+
+``Containers vs virtual machines.``
+
+The biggest difference is with Virtual machines you have the entire Operating system where as with containers you have only the kernel.
+
 
 In this folder [workshop/docker-101] you will find:
 
@@ -13,6 +28,13 @@ In this folder [workshop/docker-101] you will find:
 ``index.html`` is the custom webpage that will be used to show that the image created has the changes by running the container.
 
 ``.dockerignore`` this is a file that is used to ignore files from the Docker runtime when building to improve performance.
+
+## Some Definitions
+
+``Docker Image``: This is a predefined contact of what is required for your application to be run.
+
+``Docker Container``: This is the running application that was based from a Docker image.
+
 
 ## Breakdown of the basic commands
 
