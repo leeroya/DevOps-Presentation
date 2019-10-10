@@ -1,3 +1,3 @@
-FROM nanoserver/iis
-COPY index.html /inetpub/wwwroot/index.html
+FROM nginx
+COPY index.html /usr/share/nginx/html/index.html
 EXPOSE 80
