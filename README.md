@@ -40,59 +40,27 @@ This repository is authored in a way from a developers point of view with the co
 
 # Building and running apps in containers
 
-BuildKit and how to author the Dockerfile
-- Docker run commands and Docker-Compose
-Basics in orchestration , Docker Swarm and compose including Kubernetes 101
-
-What is swarm and when to use it
-Docker-Compose with swam
-What is Kubernetes
-Swarm vs Kubernetes
-Docker Desktop and Kubernetes
-Kubernetes Tools
-Pipelines with containers
-
-When should you put your build in a container
-How to put your build into a container
-Benefits of containerized builds
-
-- Docker 101
+- BuildKit and how to author the Dockerfile
 - Docker-Compose
-- using Docker as a developer
-    - debug in a container [vscode]
-- using Docker as a build engineer
-    - build your code then create artifacts
-- using Docker as a deployment engineer
-    - run containers
-- Kubernetes 101
-    - using kubernetes as a developer
-    - deploying kubernetes applications
+- Basics in orchestration , Docker Swarm and compose including Kubernetes 101
+    - What is swarm and when to use it
+    - Docker-Compose with swam
+    - What is Kubernetes
+    - Swarm vs Kubernetes
+- Docker Desktop and Kubernetes
+    - Kubernetes Tools
+ -Pipelines with containers
+- When should you put your build in a container
+    - How to put your build into a container
+    - Benefits of containerized builds
+
 
 ## Useful Links
 
 - [Microsoft on Docker Hub](https://hub.docker.com/u/microsoft)
-- [Docker: Deploy on Kubernetes](https://docs.docker.com/docker-for-windows/kubernetes/)
+- [Building and running apps in containers](https://docs.docker.com/docker-for-windows/kubernetes/)
 
-## Docker 101
+## Sections
 
-- [Docker 101 Workshop](workshop/docker-101/README.md)
-
-## Docker-Compose
-
+- [Docker Concepts](workshop/docker-101/README.md)
 - [docker-compose](workshop/docker-compose/README.md)
-
-## Docker as a developer
-
-- [debug in a container](workshop/debug-in-container/README.md)
-
-## Docker as a build engineer
-
-- [build your code then create artifacts](workshop/nuget-package/README.md)
-
-## Docker as a deployment engineer
-
-- [run containers](workshop/deployments/README.md)
-
-## Kubernetes 101
-
-- [run containers](workshop/deployments/README.md)
