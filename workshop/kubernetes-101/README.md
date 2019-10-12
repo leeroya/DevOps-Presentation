@@ -52,11 +52,16 @@ An important part of any Continuous Deployment or Continuous Integration process
     ./run_tests
     docker-compose down
 
+```Working in the folder: [checkout location]/workshop/kubernetes-101```
+
 When you need to run the containers again you can run:
 
     docker-compose build
 
-If its needed to pass a argument for the build run:
+At times code is altered and you would like to rebuild but based on a configuration then it is
+possible to do this by passing a argument to the dockerfile from the docker-compose build action.
+
+Example:
 
     docker-compose build --build-arg config=debug
 
@@ -64,13 +69,53 @@ To run the containers as a service run:
 
     docker-compose up -d
 
+``-d`` releases the terminal from the container terminal allowing it to run in the background.
+
 To run two of the three services run:
 
     docker-compose up --force-recreate db web
 
+In the above example the api can be run in ``debug`` and the rest of the application stack 'db' & 'web' are run allowing a developer experience to view the potencial issue or add features.
+
+    docker-compose build --build-arg config=production
+    docker-compose up  --force-recreate
+    docker-compose up -d
+
+To remove the services simple run in the same folder where the docker-compose file is, 
+
+    docker-compose down
+
+
 # Basics in orchestration
 
 # Docker Swarm with compose 
+
+## What is a swarm?
+The cluster management and orchestration features embedded in the Docker Engine are built using swarmkit. Swarmkit is a separate project which implements Docker’s orchestration layer and is used directly within Docker.
+
+A swarm consists of multiple Docker hosts which run in swarm mode and act as managers (to manage membership and delegation) and workers (which run swarm services). A given Docker host can be a manager, a worker, or perform both roles. When you create a service, you define its optimal state (number of replicas, network and storage resources available to it, ports the service exposes to the outside world, and more). Docker works to maintain that desired state. For instance, if a worker node becomes unavailable, Docker schedules that node’s tasks on other nodes. A task is a running container which is part of a swarm service and managed by a swarm manager, as opposed to a standalone container.
+
+[read more.](https://docs.docker.com/engine/swarm/key-concepts/)
+
+``NOTE:`` ```Working in the folder: [checkout location]/workshop/kubernetes-101/swarm```
+
+In this example with will use a docker-compose.yml file to simply run a one replica container 
+
+    docker stack deploy --compose-file docker-compose.yml stackdemo
+
+To view the services run:
+
+    docker service ls
+
+
+![](../../resources/stack-deploy-single.png)
+
+Open browser and navigate to http://localhost:8001 and you should see the UI that we created earlier.
+
+For more information on replicas [read compose-file/#replicas](https://docs.docker.com/compose/compose-file/#replicas) from the official documentation.
+
+Swarm is a nice way of getting familiar with orchestration and how to limit and control container workloads.
+
 
 # Docker Kubernetes with compose
 

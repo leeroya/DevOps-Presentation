@@ -25,8 +25,7 @@ services:
       dockerfile: Dockerfile
     container_name: awesome-api
     environment:
-      - "Data:Provider=MySQL"
-      - "Data:ConnectionString=Server=db;Port=4000;Database=AlbumViewer;User=root;SslMode=None"
+      - "ConnectionStrings:DemoContext=Server=db;Database=Demo;User Id=sa;Password=yourStrong(!)Password;"
     ports:
       - '8090:80'
 

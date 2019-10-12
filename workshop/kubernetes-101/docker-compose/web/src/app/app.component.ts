@@ -13,7 +13,7 @@ export class AppComponent implements OnInit {
   constructor(private http: HttpClient) {
   }
   ngOnInit(): void {
-    this.http.get(`${environment.api}/WeatherForecast`)
+    this.http.get(`${environment.api}/api/WeatherForecast`)
       .subscribe((data: any) => {
         this.forecast = data;
       });
