@@ -40,7 +40,6 @@ This repository is authored in a way from a developers point of view with the co
 
 # Building and running apps in containers
 
-- BuildKit and how to author the Dockerfile
 - Docker-Compose
 - Basics in orchestration , Docker Swarm and compose including Kubernetes 101
     - What is swarm and when to use it
