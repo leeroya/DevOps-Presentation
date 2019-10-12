@@ -1,0 +1,11 @@
+version: '3.2' 
+
+services:
+  replicated-app:
+    image: docker-compose_web
+    ports:
+      - "8002:80"
+    deploy:
+      mode: replicated
+      replicas: 
+  

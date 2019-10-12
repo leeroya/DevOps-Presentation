@@ -1,0 +1,33 @@
+version: '3.2'
+
+services:
+  db:
+    image: mcr.microsoft.com/mssql/server:2017-latest-ubuntu
+    ports:
+      - "1433:1433"
+    environment:
+      - "SA_PASSWORD=yourStrong(!)Password"
+      - "ACCEPT_EULA=Y"
+    volumes:
+      - ./data:/var/opt/mssql/data
+  web:
+    build:
+      context: ./web
+      dockerfile: Dockerfile
+    ports:
+      - "8080:80"
+
+  api:
+    depends_on:
+      - db
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    container_name: awesome-api
+    environment:
+      - "ConnectionStrings:DemoContext=Server=db;Database=Demo;User Id=sa;Password=yourStrong(!)Password;"
+    ports:
+      - '8090:80'
+
+networks:
+  default:

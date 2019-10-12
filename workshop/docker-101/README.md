@@ -1,6 +1,4 @@
-# Docker Concepts
-
-``What are containers and how do they differ from other technologies?``
+# What are containers and how do they differ from other technologies?
 
 ### "Official"
 
@@ -8,12 +6,37 @@ Docker is an open platform for developing, shipping, and running applications. D
 
 ### "Unofficial"
 
-An way of binding a kernel process to a filesystem and load only the infrastructure configuration that is required. Containers are light-weight as there is not overhead of the entire operating system.
+An way of binding a kernel process to a filesystem and load only the infrastructure configuration that is required. 
+Containers are light-weight as there is not overhead of the entire operating system.
 
 ``Containers vs virtual machines.``
 
 The biggest difference is with Virtual machines you have the entire Operating system where as with containers you have only the kernel.
 
+![](../../resources/container-vs-vm.png)
+
+# Docker Desktop
+
+Docker desktop is a application that can be used by developers to test and run images and containers, this application comes in two variants:
+
+- Docker Desktop Community
+- Docker Desktop EE
+
+Community edition is free where as Docker Desktop EE is licenced software and requires a quotation to recieve a lisence key.
+
+To install docker desktop [from](https://www.docker.com/products/docker-desktop), sign up and download and install the version for your operation system. 
+
+Once installed you will have a whale icon in the respective system tray:
+
+![](../../resources/whale-icon.png)
+
+Right clicking on the icon give a menu item that allows you to alter the settings for the application.
+
+![](../../resources/whale-menu.png)
+
+`Enable experimental features by selecting the Settings -> Daemon and enable experimental features.`
+
+![](../../resources/whale-menu-daemon.png)
 
 In this folder [workshop/docker-101] you will find:
 
@@ -42,9 +65,8 @@ In this folder [workshop/docker-101] you will find:
 
 ``Example of this``
 
-    [docker] [run] [--name] (nanoiis) [mcr.microsoft.com/dotnet/framework/sdk] (pwsh -c "Write-Host 'Hello World' ")
+    [docker] [run] [--name] (my-app) [mcr.microsoft.com/dotnet/framework/sdk] (pwsh -c "Write-Host 'Hello World' ")
 
-## Lab 1
 
 Switching between Linux and Windows is done by right clicking on the whale icon in your system tray and selecting the ``Switch to Windows containers`` or ``Switch to Linux containers`` options in the menu.
 
@@ -206,11 +228,41 @@ Navigate to in your browser ``http://localhost:81`` and you will see the custom 
 ![](../../resources/docker-run-image-nginx.png)
 
 
-## Overview
+# Docker licensing model
+
+- Community
+    - Docker Desktop [Mac, Windows]
+    - Docker Engine [Fedora, Ubuntu, Centos]
+- Enterprise
+    - Docker Desktop [Windows]
+    - Docker Engine [Windows, RedHat]
+
+# New features and some advanced concepts
+
+### Docker Assemble (experimental)
+
+Docker Assemble (docker assemble) is a plugin which provides a language and framework-aware tool that enables users to build an application into an optimized Docker container. With Docker Assemble, users can quickly build Docker images without providing configuration information (like Dockerfile) by auto-detecting the required information from existing framework configuration.
+
+Docker Assemble supports the following application frameworks:
+
+- Spring Boot when using the Maven build system
+- ASP.NET Core (with C# and F#)
+
+[read more](https://www.docker.com/products/developer-tools)
+
+### Working with Contexts
+
+A single Docker CLI can have multiple contexts. Each context contains all of the endpoint and security information required to manage a different cluster or node. The docker context command makes it easy to configure these contexts and switch between them.
+
+As an example, a single Docker client on your company laptop might be configured with two contexts; dev-k8s and prod-swarm. dev-k8s contains the endpoint data and security credentials to configure and manage a Kubernetes cluster in a development environment. prod-swarm contains everything required to manage a Swarm cluster in a production environment. Once these contexts are configured, you can use the top-level docker context use <context-name> to easily switch between them.
+
+[read more](https://docs.docker.com/engine/context/working-with-contexts/)
+
+# Overview
 
 In this section we were introduced to the Docker cli and ran a nginx container, changed the loading page, and built a custom image that can be run later on a different machine.
 
-## House cleaning
+# Maintenance of a system running the Docker engine
 
 It would be good to clean up containers that are not required, to clean up it is possible to run:
 
