@@ -1,0 +1,7 @@
+version: '3.2' 
+
+services:
+  bb-app:
+    image: docker-compose_web
+    ports:
+      - "8005:80"
