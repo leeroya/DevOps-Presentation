@@ -47,7 +47,6 @@ This repository is authored in a way from a developers point of view with the co
     - What is Kubernetes
     - Swarm vs Kubernetes
 - Docker Desktop and Kubernetes
-    - Kubernetes Tools
  -Pipelines with containers
 - When should you put your build in a container
     - How to put your build into a container

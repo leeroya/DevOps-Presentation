@@ -7,5 +7,5 @@ services:
       - "8002:80"
     deploy:
       mode: replicated
-      replicas: 
+      replicas: 3
   

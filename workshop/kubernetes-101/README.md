@@ -210,3 +210,110 @@ Now lets check the deployment:
 
 
 For Kubernetes documentation, visit [kubernetes.io](https://kubernetes.io/docs/tutorials).
+
+
+
+# Build pipelines in containers
+
+Here is a example of a gitlab.com pipeline that makes use of containers to build: 
+
+    image: docker:latest
+    variables:
+    VERSION: '2.2.0.$CI_PIPELINE_IID'
+    DOCKER_IMAGE: registry.gitlab.com/minutz/minutz-core
+    services:
+    - docker:dind
+    before_script:
+    - docker login registry.gitlab.com -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD
+    stages:
+    - build
+    - build.master
+    - deploy
+
+    build branches:
+    stage: build
+    script:
+        - docker build -t $DOCKER_IMAGE:$VERSION -f .docker/Dockerfile .
+    only:
+        - branches
+
+    build master:
+    stage: build.master
+    script:
+        - docker run --rm -v ${PWD}:/build -w /build mcr.microsoft.com/powershell:latest pwsh -c "./build.ps1 '$VERSION' "
+        - docker build -t $DOCKER_IMAGE:$VERSION -f .docker/Dockerfile .
+        - docker push $DOCKER_IMAGE:$VERSION
+    only:
+        - master
+
+    beta:
+    tags:
+        - host.linux,runner.shell,container.linux,type.deploy
+    stage: deploy
+    script:
+        - echo $VERSION
+        - echo DOCKER_IMAGE:$VERSION
+        - echo -e '\nTAG='$VERSION >> .docker/.env
+        - TAG=$VERSION
+        - cd .docker
+        - docker-compose up -d
+    environment:
+        name: beta
+        url: https://core.minutz.net/swagger
+    only:
+    - master
+
+
+And the Dockerfile that is used:
+
+    FROM microsoft/dotnet:2.2-sdk AS build-env
+    WORKDIR /app
+
+    COPY . .
+    RUN dotnet publish Minutz.Core.sln -c Release -o out
+
+    FROM microsoft/dotnet:2.2-aspnetcore-runtime
+    WORKDIR /app
+    COPY --from=build-env /app/Minutz.Core.Api/out .
+    ENTRYPOINT ["dotnet", "Minutz.Core.Api.dll"]
+
+And when deploying the application a compose file is used:
+
+
+    version: '3'
+
+    services:
+    core:
+        image: "registry.gitlab.com/minutz/minutz-core:${TAG}"
+        container_name: beta-minutz-core
+        restart: unless-stopped
+        env_file:
+        - .env
+        ports:
+        - '3100:80'
+        environment:
+        - "ASPNETCORE_ENVIRONMENT=${ASPNETCORE_ENVIRONMENT}"
+        - "CLIENTSECRET=${CLIENTSECRET}"
+        - "DEFAULT_PASSWORD=2r31QYenF!aw"
+        - "NOTIFY_DEFAULT_TEMPLATE_KEY=${NOTIFY_DEFAULT_TEMPLATE_KEY}"
+        - "DOMAIN=${DOMAIN}"
+        - "DEFAULT_CATALOGUE=${DEFAULT_CATALOGUE}"
+        - "SERVER_ADDRESS=db.minutz.net,1430"
+        - "DEFAULT_SCHEMA=app"
+        - "DEFAULT_USER=sa"
+        - "NOTIFY_KEY=${NOTIFY_KEY}"
+        - "ReportMinutesKey=${ReportMinutesKey}"
+        - "CLIENTID=${CLIENTID}"
+        - "UI_BASE_URL=${UI_BASE_URL}"
+        - "AUTHORITY=${AUTHORITY}"
+        - "CONNECTION=${CONNECTION}"
+        - "ReportUsername=${ReportUsername}"
+        - "NOTIFY_USER=${NOTIFY-USER}"
+        - "ReportPassword=${ReportPassword}"
+        - "ReportUrl=${ReportUrl}"
+        - "AuthorityManagmentToken=${AuthorityManagmentToken}"
+        - "MANAGEMENT_CLIENTID=${MANAGEMENT_CLIENTID}"
+        - "MANAGEMENT_CLIENT_SECRETE=${MANAGEMENT_CLIENT_SECRETE}"
+        - "NOTIFY_INVITATION_ADDRESS=${NOTIFY_INVITATION_ADDRESS}"
+        - "TAG=${TAG}"
+
