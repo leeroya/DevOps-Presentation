@@ -6,8 +6,8 @@ Docker is an open platform for developing, shipping, and running applications. D
 
 ### "Unofficial"
 
-An way of binding a kernel process to a filesystem and load only the infrastructure configuration that is required. 
-Containers are light-weight as there is not overhead of the entire operating system.
+Simply put, a container is simply another process on your machine that has been isolated from all other processes on the host machine. That isolation leverages kernel namespaces and cgroups, features that have been in Linux for a long time. Docker has worked to make these capabilities approachable and easy to use.
+
 
 ``Containers vs virtual machines.``
 
@@ -76,7 +76,7 @@ Run our first container.
 
 Open powershell run the following:
 
-    docker run --name mywebserver -d -p 80:80 nginx
+    docker run --name mywebserver -d -p 81:80 nginx
 
 Open your browser and you will see the default IIS page when navigating to http://localhost.
 
@@ -88,8 +88,6 @@ Open your browser and you will see the default IIS page when navigating to http:
 
 
 ``NOTE:`` 
-
-## Lab 2
 
 Ensure that your Docker context is running in the Linux containers mode.
 
