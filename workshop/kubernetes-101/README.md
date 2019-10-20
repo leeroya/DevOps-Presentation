@@ -317,3 +317,14 @@ And when deploying the application a compose file is used:
         - "NOTIFY_INVITATION_ADDRESS=${NOTIFY_INVITATION_ADDRESS}"
         - "TAG=${TAG}"
 
+
+
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v1.10.1/src/deploy/recommended/kubernetes-dashboard.yaml
+
+kubectl proxy
+
+Go to http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/ on Browser and you will get the below output:
+
+PS C:\Users\Ajeet_Raina\Desktop> $TOKEN=((kubectl -n kube-system describe secret default | Select-String "token:") -split " +")[1]
+
+PS C:\Users\Ajeet_Raina\Desktop> kubectl config set-credentials docker-for-desktop --token="${TOKEN
